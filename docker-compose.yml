@@ -1,26 +1,25 @@
-version: '2'
+version: '3'
 services:
   db:
-    container_name: "db"
     image: mongo:latest
     volumes:
-      - /home/ubuntu/mongo-data:/data/db
+      - assets:/data/db
     ports:
       - 27017:27017
     networks:
       - spring_demo_net
   web:
-    image: getmub/todo:v1
+    image: nigelt007/todo:v2
     depends_on:
       - db
-    environment:
-      - COUCHBASE_URI=db
     ports:
-      - 8090:8080
+      - 8091:8080
     links:
-      - db  
+      - db 
     networks:
       - spring_demo_net
+volumes:
+  assets:
 networks:
   spring_demo_net:
-driver: bridge
+driver: overlay
